@@ -1,7 +1,7 @@
 {
   "model_name": "ESQSetEncoder",
   "model_version": "v3-prior-guide-release",
-  "purpose": "Predict operator, lambda, and program-length priors used to reorder branch-preserving symbolic search over the DeepCoder typed list/integer DSL.",
+  "purpose": "Predict operator and lambda priors for branch-preserving symbolic search over the DeepCoder typed list/integer DSL. A program-length head is trained as an auxiliary objective and exposed at inference, but its predictions do not currently affect search order.",
   "device": "CPU",
   "parameter_count_total": 137897,
   "parameter_count_used_by_trained_prior_heads": 78664,
@@ -310,8 +310,10 @@
     "sha256_scope": "Integrity check for the exact published bytes; not a malware scan."
   },
   "limitations": [
-    "The guide predicts operation/lambda priors; it is not a program-output oracle.",
-    "Search remains symbolic and branch-preserving; model scores reorder enumeration but do not prune valid branches.",
+    "The guide predicts operator and lambda priors used to reorder symbolic enumeration; it is not a program-output oracle.",
+    "The program-length head predicts classes 1–6 and contributes a weighted auxiliary loss to the shared encoder during training. Its output is returned by predict_priors but is discarded by the released search runtime; it does not schedule search or affect benchmark search order.",
+    "No controlled length-head ablation has established whether auxiliary length supervision improves operator/lambda representations or synthesis outcomes.",
+    "Search remains symbolic and branch-preserving; operator/lambda scores reorder enumeration but do not prune valid branches.",
     "The legacy tree candidate-scoring branch is not used by v3 prior prediction and is not optimized by this training objective."
   ],
   "provenance_status": "Partial for the historical release rebuild: corpus and supervision hashes are known, but the exact training-entrypoint hash and runtime environment were not retained in the original model card. Re-run the committed training pipeline from a clean checkout before claiming exact training reproduction.",
