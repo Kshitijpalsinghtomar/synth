@@ -42,7 +42,7 @@ a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41
 
 This restriction protects the older weights-only deserializer path. Custom or third-party checkpoints require PyTorch 2.10.0 or later. The hash check proves byte identity with the published bundled checkpoint; it is not a general malware scan.
 
-The Hugging Face model-card README is maintained in [`huggingface/README.md`](huggingface/README.md). The canonical model card keeps `checkpoint.path` for this repository and records the separate Hub-root location in `checkpoint.hub_path`.
+The Hugging Face model-card README is maintained in [`huggingface/README.md`](huggingface/README.md), and the published checkpoint is available from [Synth Compass on Hugging Face](https://huggingface.co/Kshitijpalsinghtomar/synth-compass). The canonical model card keeps `checkpoint.path` for this repository and records the separate Hub-root location in `checkpoint.hub_path`.
 
 Create a task file named sample_task.json:
 
