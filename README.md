@@ -31,7 +31,7 @@ It is a **symbolic synthesizer with learned search guidance**—not an LLM that 
 
 1. **Typed bounded enumeration.** Programs are enumerated in the integer/list DSL under explicit operator, signature and time limits, with strict intermediate-value semantics.
 2. **Execution-signature quotienting.** For the visible examples, each candidate is represented by its output signature and type. Candidates with the same signature share one deterministic representative, selected by operator cost and then lexical expression.
-3. **Neural search compass (optional).** A 137,897-parameter CPU model predicts operator, lambda and program-length priors. These priors reorder candidate visitation; they do not prune grammar branches, remove valid candidates or predict hidden outputs.
+3. **Neural search compass (optional).** A 137,897-parameter CPU model predicts operator, lambda and program-length priors. In the released search runtime, operator and lambda priors reorder candidate visitation; the predicted program-length distribution is exposed as model output but is not currently used to schedule search. No learned prior prunes grammar branches or removes valid candidates.
 4. **One-turn oracle (interactive mode only).** Synth freezes up to three shortest distinct exact-fit candidates, validates a disagreement query against that portfolio, and asks an oracle at most once. Only a response matching a frozen candidate can change the selection. Abstention, invalid input, timeout or mismatch preserves the deterministic fallback.
 
 > **Important distinction:** equal execution signatures mean indistinguishable on the *visible examples*. They do not prove that two programs are semantically equivalent for every possible input.
