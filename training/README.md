@@ -1,6 +1,6 @@
 # Training and data provenance
 
-The released neural artifact is the **ESQSetEncoder v3 prior guide** used by the ESQ-DSL v5 search protocol. It predicts operation/lambda/length priors; it is not a program-output model.
+The released neural artifact is the **ESQSetEncoder v3 prior guide** used by the ESQ-DSL v5 search protocol. It predicts operator and lambda priors used to reorder search. A program-length head is also trained with a weighted auxiliary loss and exposed at inference, but the released search runtime discards that output; it is not used to schedule search. The effect of the auxiliary length objective on operator/lambda guidance has not been isolated by an ablation. The model is not a program-output model.
 
 ## Rebuild the dataset
 
