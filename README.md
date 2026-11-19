@@ -38,7 +38,7 @@ It is a **symbolic synthesizer with learned search guidance**—not an LLM that 
 
 ### Architecture
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
     A["Visible input/output examples"] --> B["Task validation"]
     B --> C["Typed, bounded symbolic enumeration"]
@@ -52,15 +52,15 @@ flowchart TD
     I --> J["Matching frozen candidate"]
     I --> K["Abstain / invalid / timeout / mismatch"]
     K --> L["Deterministic fallback"]
-\`\`\`
+```
 
 ### Operating modes
 
 | Mode | What it does | Dependencies |
 |---|---|---|
-| \`symbolic\` | Bounded typed enumeration without neural guidance or an oracle | Core package only |
-| \`guided\` | Same branch-preserving search, with learned priors ordering visitation | Optional NumPy and PyTorch |
-| \`interactive\` | Guided search plus a frozen candidate portfolio and at most one oracle turn | Optional NumPy and PyTorch; human terminal adapter by default |
+| `symbolic` | Bounded typed enumeration without neural guidance or an oracle | Core package only |
+| `guided` | Same branch-preserving search, with learned priors ordering visitation | Optional NumPy and PyTorch |
+| `interactive` | Guided search plus a frozen candidate portfolio and at most one oracle turn | Optional NumPy and PyTorch; human terminal adapter by default |
 
 The names V1, V3 and V5 are historical research milestones corresponding to the three modes; they are not software version numbers. V6 is an evaluation protocol/cohort, not another mode or model architecture.
 
@@ -70,21 +70,21 @@ Python 3.10 or later is required.
 
 Clone and install the core package:
 
-\`\`\`bash
+```bash
 git clone https://github.com/Kshitijpalsinghtomar/synth.git
 cd synth
 python -m pip install -e .
-\`\`\`
+```
 
 The symbolic mode has no mandatory third-party runtime dependency. For neural-guided and interactive modes:
 
-\`\`\`bash
+```bash
 python -m pip install -e ".[neural]"
-\`\`\`
+```
 
-Create \`sample_task.json\`:
+Create `sample_task.json`:
 
-\`\`\`json
+```json
 {
   "task_id": "reverse-list-example",
   "inputs": {
@@ -98,11 +98,11 @@ Create \`sample_task.json\`:
     }
   }
 }
-\`\`\`
+```
 
 Run any of the three modes:
 
-\`\`\`bash
+```bash
 # No model required
 synth sample_task.json --mode symbolic
 
@@ -113,11 +113,11 @@ synth sample_task.json --mode guided \
 # At most one oracle request
 synth sample_task.json --mode interactive \
   --checkpoint checkpoints/esq_v3_converged.pt
-\`\`\`
+```
 
-Interactive mode uses a human terminal adapter by default. An optional local subprocess adapter can be provided with \`--oracle-command\`; it receives one JSON request on standard input and returns one JSON response on standard output. It is launched without a shell. Connect only an oracle authorized to answer the task.
+Interactive mode uses a human terminal adapter by default. An optional local subprocess adapter can be provided with `--oracle-command`; it receives one JSON request on standard input and returns one JSON response on standard output. It is launched without a shell. Connect only an oracle authorized to answer the task.
 
-The Python API is available through \`run_task\` in \`esq_dsl.cli\`. See the [architecture guide](docs/ARCHITECTURE.md) and [documentation index](docs/README.md) for API details, protocols and implementation notes.
+The Python API is available through `run_task` in `esq_dsl.cli`. See the [architecture guide](docs/ARCHITECTURE.md) and [documentation index](docs/README.md) for API details, protocols and implementation notes.
 
 ## Evaluation
 
@@ -129,11 +129,11 @@ These evaluations use public DeepCoder task splits from the ExeDec repository, w
 
 | Split | Method / checkpoint | Complete fresh-behaviour matches | Fresh-case accuracy |
 |---|---|---:|---:|
-| \`SWITCH_CONCEPT_ORDER\` | ESQ-03 symbolic baseline | **144/180 (80.00%)** | **7,947/8,937 (88.92%)** |
-| \`LENGTH_GENERALIZATION\` | Original V3 prior-guide checkpoint | **118/180 (65.56%)** | **78.69%** |
-| \`LENGTH_GENERALIZATION\` | V1 symbolic baseline | **108/180 (60.00%)** | **75.23%** |
+| `SWITCH_CONCEPT_ORDER` | ESQ-03 symbolic baseline | **144/180 (80.00%)** | **7,947/8,937 (88.92%)** |
+| `LENGTH_GENERALIZATION` | Original V3 prior-guide checkpoint | **118/180 (65.56%)** | **78.69%** |
+| `LENGTH_GENERALIZATION` | V1 symbolic baseline | **108/180 (60.00%)** | **75.23%** |
 
-The V3 length-generalization result is a historical comparison against the V1 symbolic baseline on the same confirmation split. **It used the original V3 checkpoint (SHA-256 beginning \`1e5e086f\`), not the checkpoint packaged in release 1.0.0.** Do not attribute the 118/180 result to the packaged release model.
+The V3 length-generalization result is a historical comparison against the V1 symbolic baseline on the same confirmation split. **It used the original V3 checkpoint (SHA-256 beginning `1e5e086f`), not the checkpoint packaged in release 1.0.0.** Do not attribute the 118/180 result to the packaged release model.
 
 Reports: [ESQ-03 baseline](docs/experiments/v1-baseline.md) · [V3 confirmation](docs/experiments/v3-positive-result.md) · [model inventory and checkpoint distinction](docs/MODEL_INVENTORY.md).
 
@@ -156,17 +156,17 @@ Reports: [V6 results and provenance](docs/experiments/v6-four-way-200-results.md
 
 ## Model and reproducibility
 
-The release includes the \`ESQSetEncoder\` checkpoint:
+The release includes the `ESQSetEncoder` checkpoint:
 
 - **Parameters:** 137,897 total; 78,664 are used by the trained operator/lambda/length prior heads. The remaining 59,233 belong to a legacy candidate-ranker branch not optimized by this training objective.
 - **Inference:** CPU; no GPU required.
-- **Checkpoint:** [\`esq_v3_converged.pt\`](https://github.com/Kshitijpalsinghtomar/synth/releases/download/v1.0.0/esq_v3_converged.pt)
-- **SHA-256:** \`a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41\`
-- **Model card and metadata:** [\`model_card.json\`](checkpoints/model_card.json) · [Hugging Face model repository](https://huggingface.co/Kshitijpalsinghtomar/synth-compass)
+- **Checkpoint:** [`esq_v3_converged.pt`](https://github.com/Kshitijpalsinghtomar/synth/releases/download/v1.0.0/esq_v3_converged.pt)
+- **SHA-256:** `a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41`
+- **Model card and metadata:** [`model_card.json`](checkpoints/model_card.json) · [Hugging Face model repository](https://huggingface.co/Kshitijpalsinghtomar/synth-compass)
 
 The loader verifies the bundled checkpoint against its SHA-256 sidecar and model card before loading. A matching digest verifies byte identity; it is not a malware scan. See [SECURITY.md](SECURITY.md) for checkpoint-loading guidance and PyTorch compatibility.
 
-The training procedure and synthetic-data generation code are in [\`training/\`](training/README.md). Benchmark protocols and scoring implementation are in [\`benchmarks/\`](benchmarks/README.md). Generated corpora, supervision arrays, reference programs, hidden target maps and private oracle traces are not included in the public repository.
+The training procedure and synthetic-data generation code are in [`training/`](training/README.md). Benchmark protocols and scoring implementation are in [`benchmarks/`](benchmarks/README.md). Generated corpora, supervision arrays, reference programs, hidden target maps and private oracle traces are not included in the public repository.
 
 ## Scope and limitations
 
@@ -185,9 +185,9 @@ Synth 1.0.0 is archived as a versioned software release on Zenodo. **It is a sof
 
 - Version-specific DOI: [10.5281/zenodo.24373017](https://doi.org/10.5281/zenodo.24373017)
 - Concept DOI (all versions): [10.5281/zenodo.24373016](https://doi.org/10.5281/zenodo.24373016)
-- Machine-readable citation: [\`CITATION.cff\`](CITATION.cff)
+- Machine-readable citation: [`CITATION.cff`](CITATION.cff)
 
-\`\`\`bibtex
+```bibtex
 @software{synth_esq_dsl_2026,
   author    = {Pal, Kshitij},
   title     = {Synth (ESQ-DSL): Deterministic Program Synthesis via
@@ -198,7 +198,7 @@ Synth 1.0.0 is archived as a versioned software release on Zenodo. **It is a sof
   doi       = {10.5281/zenodo.24373017},
   url       = {https://github.com/Kshitijpalsinghtomar/synth}
 }
-\`\`\`
+```
 
 ## License and acknowledgements
 
