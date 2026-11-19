@@ -1,5 +1,7 @@
 # Synth (ESQ-DSL)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24373016.svg)](https://doi.org/10.5281/zenodo.24373016)
+
 **Deterministic program synthesis via execution-signature quotienting.**
 
 *TENS LAB · [tenslab.dev](https://tenslab.dev) · Release 1.0.0 · Apache-2.0 · Python 3.10+*
