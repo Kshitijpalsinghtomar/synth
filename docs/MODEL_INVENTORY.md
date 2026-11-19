@@ -34,7 +34,7 @@ The implementation defines one `ESQSetEncoder` PyTorch module. Its state diction
 4. A program-length prior head (6 outputs).
 5. A tree-structured candidate-scoring branch (the legacy candidate ranker).
 
-The released v3 prior-training objective uses the three prior heads. The current model card records 78,664 parameters used by the trained prior objective out of 137,897 total parameters; the remaining 59,233 parameters belong to the legacy candidate-scoring branch and are not optimized by the v3 prior objective. The v4 research checkpoint starts from the v3 model and trains that candidate-scoring branch while freezing the task encoder and prior heads.
+The released v3 prior-training objective supervises all three prior heads. At runtime, only operator and lambda predictions are used to reorder search; the length prediction is returned by the model API but discarded by the released search path. The length loss can still update the shared encoder during training. Its contribution to downstream search quality has not been established by a controlled ablation. The current model card records 78,664 parameters used by the trained prior objective out of 137,897 total parameters; the remaining 59,233 parameters belong to the legacy candidate-scoring branch and are not optimized by the v3 prior objective. The v4 research checkpoint starts from the v3 model and trains that candidate-scoring branch while freezing the task encoder and prior heads.
 
 Therefore:
 - The operator, lambda and length heads are **not three separate models**; they are output heads in one model.
@@ -57,7 +57,7 @@ The interactive oracle is an external response protocol, not a neural model. It 
 |---|---|---|
 | v1 | Pure symbolic execution-signature baseline | No |
 | v2 | Learned beam/pruning experiment; negative result because pruning removed useful branches | No checkpoint in this release |
-| v3 | Branch-preserving search with learned operator/lambda/length priors used only to reorder search | The v3 prior-guide family; the release branch includes one rebuilt checkpoint |
+| v3 | Branch-preserving search ordered by learned operator/lambda priors; auxiliary length head is trained but not consumed by runtime | The v3 prior-guide family; the release branch includes one rebuilt checkpoint |
 | v4 | Candidate-scoring experiment initialized from v3; trains the tree scorer while freezing prior components | Yes, a separate research checkpoint exists, but it is not shipped in Synth |
 | v5 | One-turn, frozen candidate-portfolio/oracle protocol | **No.** It reuses the v3 prior guide in its neural-guided arm; it is not a new neural network |
 
