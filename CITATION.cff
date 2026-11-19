@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use Synth, please cite the versioned software release."
+title: "Synth (ESQ-DSL): Deterministic Program Synthesis via Execution-Signature Quotienting"
+type: software
+authors:
+  - family-names: "Pal"
+    given-names: "Kshitij"
+    affiliation: "TENS LAB"
+version: "1.0.0"
+license: "Apache-2.0"
+repository-code: "https://github.com/Kshitijpalsinghtomar/synth"
+url: "https://tenslab.dev"
+date-released: "2026-11-18"
+abstract: >-
+  A bounded typed program synthesizer for the integer/list fragment of the
+  DeepCoder DSL, combining execution-signature deduplication, optional
+  neural-guided search ordering, and a one-turn oracle protocol.
+  Packaged checkpoint SHA-256: a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41.
+keywords:
+  - program synthesis
+  - programming by example
+  - enumerative search
+  - neural-guided synthesis
+  - DeepCoder

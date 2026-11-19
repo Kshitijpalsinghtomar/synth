@@ -1,0 +1,31 @@
+[build-system]
+requires=["setuptools>=68","wheel"]
+build-backend="setuptools.build_meta"
+[project]
+name="synth-esq-dsl"
+version="1.0.0"
+description="Deterministic program synthesis via execution-signature quotienting for the DeepCoder typed list/integer DSL"
+license = {file = "LICENSE"}
+authors = [{name = "Kshitij Pal"}]
+requires-python=">=3.10"
+dependencies=[]
+[project.optional-dependencies]
+neural=["numpy>=1.24","torch>=2.0.0"]
+training=["numpy>=1.24","torch>=2.0.0"]
+test=["pytest>=7"]
+[project.scripts]
+synth="esq_dsl.cli:main"
+[project.urls]
+Homepage = "https://tenslab.dev"
+Repository = "https://github.com/Kshitijpalsinghtomar/synth"
+
+[tool.synth.release]
+author = "Kshitij Pal"
+affiliation = "TENS LAB"
+url = "https://tenslab.dev"
+license = "Apache-2.0"
+release-version = "1.0.0"
+checkpoint-sha256 = "a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41"
+
+[tool.setuptools.packages.find]
+include=["esq_dsl*"]

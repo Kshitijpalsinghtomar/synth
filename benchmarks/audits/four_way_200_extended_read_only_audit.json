@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "audit_status": "PASS",
+  "experiment": "SYNTH-ESQ-V5-FOUR-WAY-200",
+  "scope": "read-only audit of frozen candidates, input streams, targets, task journal and append-only oracle provenance; no synthesis, training, oracle adapter calls, rescoring, or frozen-artifact writes",
+  "claim_boundary": "fresh structural-family-held-out synthetic generator cohort with a local file-backed reference oracle; not an official ExeDec benchmark",
+  "artifact_integrity": {
+    "frozen_candidate_rows": 800,
+    "candidate_family_hash_rows": 0,
+    "candidate_family_hash_mismatches": 0,
+    "query_eval_rows": 200,
+    "target_map_count": 400,
+    "task_rows": 200,
+    "target_pair_content_mismatches": 0,
+    "cohort_lock_sha256": "4ba767699c6021cf2fd33dab73a2efebf85f44a229b337ba78bf77d34fdf1b70",
+    "candidate_freeze_sha256": "14fbd809a517b876a579a994c9cdb57a7d0b0cbe7b84cbe1099035825a437459",
+    "query_eval_inputs_sha256": "875c26ad8da0e2bbbfb598e2fc0eb4e5f9b1bcce27a59d7e85ab3be19802fcc2",
+    "target_map_manifest_sha256": "cb619b7a41dfa588fff993053218b0473d8cf011d0a2cb5e0ee72d293a5e9af8",
+    "task_journal_sha256": "af4e85032aaf19d1837ebd78b1ba2c6ad5023136f1856fb192b97dae5296716c",
+    "provenance_sha256": "a082ca592aaaa417f0a907038de9dfc689d78ffdf163af5f916135de7d90d7c9"
+  },
+  "cohort_reconstruction": {
+    "generation_attempts": 401,
+    "unique_fresh_families": 200,
+    "prior_family_overlap": 0,
+    "target_execution_trace_crosschecks": 814
+  },
+  "target_depth": {
+    "active_operator_histogram": {
+      "2": 6,
+      "3": 21,
+      "4": 47,
+      "5": 61,
+      "6": 65
+    },
+    "search_max_ops": 4,
+    "targets_over_search_depth_4": 126,
+    "targets_over_search_depth_4_rate": 0.63,
+    "depth_by_eligibility": {
+      "le4": {
+        "eligible": 51,
+        "ineligible": 23
+      },
+      "over4": {
+        "eligible": 53,
+        "ineligible": 73
+      }
+    },
+    "strict_portfolio_full_matches_overdepth_tasks": {
+      "v1_symbolic": 19,
+      "v3_guided": 20,
+      "v5_ablation": 28,
+      "v5_full": 28
+    },
+    "strict_portfolio_full_matches_eligible_overdepth_tasks": {
+      "v1_symbolic": 8,
+      "v3_guided": 8,
+      "v5_ablation": 9,
+      "v5_full": 9
+    },
+    "interpretation": "Depth greater than four is not proof of unsolvability: frozen candidate portfolios contain shorter strict behavioural equivalents for some over-depth targets."
+  },
+  "input_streams": {
+    "visible_examples": 600,
+    "query_pool_rows": 19743,
+    "query_pool_duplicates": 0,
+    "visible_query_overlap_rows": 136,
+    "reserved_rows": 10000,
+    "reserved_duplicates": 0,
+    "visible_reserved_overlap_rows": 0,
+    "query_reserved_overlap_rows": 0,
+    "query_pool_requested_max_per_task": 100,
+    "query_pool_actual_length_histogram": {
+      "39": 3,
+      "42": 1,
+      "84": 1,
+      "100": 195
+    },
+    "query_pool_short_task_ids": [
+      "synth-200-0019",
+      "synth-200-0035",
+      "synth-200-0041",
+      "synth-200-0055",
+      "synth-200-0133"
+    ],
+    "query_pool_short_domain_check": "Each short pool is the complete unique finite domain under that task's frozen input profile; these are not truncated or duplicated records."
+  },
+  "target_valid_reserved_cases_histogram": {
+    "0": 15,
+    "1": 7,
+    "2": 7,
+    "3": 9,
+    "4": 4,
+    "5": 4,
+    "6": 1,
+    "7": 2,
+    "8": 1,
+    "9": 8,
+    "10": 2,
+    "11": 3,
+    "12": 3,
+    "13": 4,
+    "15": 3,
+    "16": 2,
+    "18": 3,
+    "19": 3,
+    "20": 3,
+    "21": 4,
+    "22": 3,
+    "23": 3,
+    "24": 2,
+    "26": 4,
+    "27": 4,
+    "28": 2,
+    "29": 1,
+    "30": 2,
+    "31": 3,
+    "32": 1,
+    "33": 1,
+    "34": 3,
+    "36": 4,
+    "37": 3,
+    "38": 1,
+    "39": 3,
+    "40": 1,
+    "41": 1,
+    "42": 2,
+    "43": 2,
+    "44": 1,
+    "46": 1,
+    "48": 3,
+    "49": 4,
+    "50": 55
+  },
+  "strictness": {
+    "semantics": "Search used strict_intermediates=False; target generation, evaluation, and query prevalidation used strict execution. The audit applied the interpreter's strict bounds to every frozen candidate and target-valid reserved input.",
+    "arms": {
+      "v1_symbolic": {
+        "visible_permissive_exact_fit_tasks": 170,
+        "visible_strict_exact_fit_tasks": 167,
+        "visible_exact_fit_tasks_lost_under_strict_bounds": 3,
+        "tasks_with_reserved_strict_bound_affected_candidate": 14,
+        "reserved_strict_bound_rejected_candidate_input_executions": 392,
+        "reserved_candidate_input_executions": 10000,
+        "target_valid_strict_bound_rejections": 54,
+        "target_valid_candidate_input_executions": 5390,
+        "target_valid_rejection_rate": 0.01001855,
+        "strict_portfolio_full_matches_all_tasks": 40,
+        "strict_portfolio_full_matches_eligible_tasks": 26,
+        "strict_selected_full_matches_eligible_tasks": 26,
+        "strict_eligible_overdepth_full_matches": 8
+      },
+      "v3_guided": {
+        "visible_permissive_exact_fit_tasks": 182,
+        "visible_strict_exact_fit_tasks": 177,
+        "visible_exact_fit_tasks_lost_under_strict_bounds": 5,
+        "tasks_with_reserved_strict_bound_affected_candidate": 17,
+        "reserved_strict_bound_rejected_candidate_input_executions": 474,
+        "reserved_candidate_input_executions": 10000,
+        "target_valid_strict_bound_rejections": 65,
+        "target_valid_candidate_input_executions": 5390,
+        "target_valid_rejection_rate": 0.01205937,
+        "strict_portfolio_full_matches_all_tasks": 43,
+        "strict_portfolio_full_matches_eligible_tasks": 27,
+        "strict_selected_full_matches_eligible_tasks": 27,
+        "strict_eligible_overdepth_full_matches": 8
+      },
+      "v5_ablation": {
+        "visible_permissive_exact_fit_tasks": 180,
+        "visible_strict_exact_fit_tasks": 176,
+        "visible_exact_fit_tasks_lost_under_strict_bounds": 4,
+        "tasks_with_reserved_strict_bound_affected_candidate": 24,
+        "reserved_strict_bound_rejected_candidate_input_executions": 1026,
+        "reserved_candidate_input_executions": 18400,
+        "target_valid_strict_bound_rejections": 216,
+        "target_valid_candidate_input_executions": 9816,
+        "target_valid_rejection_rate": 0.02200489,
+        "strict_portfolio_full_matches_all_tasks": 55,
+        "strict_portfolio_full_matches_eligible_tasks": 30,
+        "strict_selected_full_matches_eligible_tasks": 30,
+        "strict_eligible_overdepth_full_matches": 9,
+        "portfolio_full_available_but_not_selected_all_tasks": 6,
+        "portfolio_full_available_but_not_selected_eligible_tasks": 0
+      },
+      "v5_full": {
+        "visible_permissive_exact_fit_tasks": 182,
+        "visible_strict_exact_fit_tasks": 178,
+        "visible_exact_fit_tasks_lost_under_strict_bounds": 4,
+        "tasks_with_reserved_strict_bound_affected_candidate": 24,
+        "reserved_strict_bound_rejected_candidate_input_executions": 1026,
+        "reserved_candidate_input_executions": 18450,
+        "target_valid_strict_bound_rejections": 216,
+        "target_valid_candidate_input_executions": 9866,
+        "target_valid_rejection_rate": 0.02189337,
+        "strict_portfolio_full_matches_all_tasks": 55,
+        "strict_portfolio_full_matches_eligible_tasks": 30,
+        "strict_selected_full_matches_eligible_tasks": 30,
+        "strict_eligible_overdepth_full_matches": 9,
+        "portfolio_full_available_but_not_selected_all_tasks": 3,
+        "portfolio_full_available_but_not_selected_eligible_tasks": 0
+      }
+    },
+    "reconciliation_checks": {
+      "selected_case_count_mismatches": 0,
+      "target_valid_case_count_mismatches": 0,
+      "selected_program_hash_missing": 0,
+      "query_prevalidation_queryable_journal_mismatches": 0,
+      "query_prevalidation_screening_event_mismatches": 0,
+      "query_prevalidation_proposal_event_mismatches": 0
+    },
+    "interpretation": "Relaxed search admitted candidates that strict runtime rejects on some visible/reserved inputs. The selected strict scores reconcile exactly to the durable journal. On eligible tasks, no full-match portfolio candidate was left unselected; observed portfolio-only full matches occurred only among ineligible tasks."
+  },
+  "query_prevalidation": {
+    "v5_ablation": {
+      "sessions": 180,
+      "screened": 102,
+      "queryable": 85,
+      "fallback": 134,
+      "candidate_execution_rejected_query_rows": 959
+    },
+    "v5_full": {
+      "sessions": 182,
+      "screened": 103,
+      "queryable": 86,
+      "fallback": 135,
+      "candidate_execution_rejected_query_rows": 959
+    },
+    "total_sessions_checked": 362,
+    "screened_sessions": 205,
+    "proposals_recomputed": 171,
+    "strict_candidate_execution_rejections": 1044,
+    "intermediate_bound_rejections": 871,
+    "final_bound_rejections": 173,
+    "runtime_invalids": 874,
+    "queryable_and_fallback_sessions_per_arm": 39
+  },
+  "provenance": {
+    "event_count": 1641,
+    "unique_candidate_sessions": 362,
+    "unique_query_sessions": 171,
+    "unique_fallback_sessions": 269,
+    "events": {
+      "portfolio_frozen": 364,
+      "query_pool_screened": 207,
+      "query_proposed": 172,
+      "oracle_requested": 172,
+      "oracle_response": 172,
+      "candidate_selected": 94,
+      "fallback_selected": 269,
+      "no_query": 191
+    },
+    "duplicate_attempts": {
+      "synth-200-0172-v5_ablation": {
+        "portfolio_frozen": 2,
+        "query_pool_screened": 2,
+        "query_proposed": 2,
+        "oracle_requested": 2,
+        "oracle_response": 2,
+        "candidate_selected": 2
+      },
+      "synth-200-0172-v5_full": {
+        "portfolio_frozen": 2,
+        "query_pool_screened": 2,
+        "query_proposed": 1,
+        "oracle_requested": 1,
+        "oracle_response": 1,
+        "candidate_selected": 1
+      }
+    },
+    "query_screening_and_proposal_reconciliation": "PASS",
+    "explanation": "These are preserved retries after an interruption before the task-level result row was appended. The old file-backed oracle is deterministic and side-effect-free; do not delete or normalize the raw attempt history."
+  }
+}

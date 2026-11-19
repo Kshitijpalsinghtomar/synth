@@ -1,0 +1,355 @@
+{
+  "model_name": "ESQSetEncoder",
+  "model_version": "v3-prior-guide-release",
+  "purpose": "Predict operator, lambda, and program-length priors used to reorder branch-preserving symbolic search over the DeepCoder typed list/integer DSL.",
+  "device": "CPU",
+  "parameter_count_total": 137897,
+  "parameter_count_used_by_trained_prior_heads": 78664,
+  "parameter_count_in_legacy_candidate_ranker_branch_not_optimized_by_this_objective": 59233,
+  "architecture": {
+    "input_feature_shape": [
+      3,
+      4,
+      37
+    ],
+    "variable_position_embedding_dim": 8,
+    "value_encoder": [
+      "Linear(45,64)",
+      "GELU",
+      "LayerNorm(64)",
+      "Dropout(0.05)",
+      "Linear(64,64)",
+      "GELU"
+    ],
+    "example_encoder": [
+      "Linear(128,64)",
+      "GELU",
+      "LayerNorm(64)"
+    ],
+    "task_projection": [
+      "Linear(320,128)",
+      "GELU",
+      "LayerNorm(128)",
+      "Dropout(0.05)",
+      "Linear(128,128)",
+      "GELU"
+    ],
+    "operator_head": {
+      "outputs": 15,
+      "labels": [
+        "Head",
+        "Last",
+        "Take",
+        "Drop",
+        "Access",
+        "Minimum",
+        "Maximum",
+        "Reverse",
+        "Sort",
+        "Sum",
+        "Map",
+        "Filter",
+        "Count",
+        "ZipWith",
+        "Scanl1"
+      ]
+    },
+    "lambda_head": {
+      "outputs": 19,
+      "labels": [
+        "(+1)",
+        "(-1)",
+        "(*2)",
+        "(/2)",
+        "(*(-1))",
+        "(**2)",
+        "(*3)",
+        "(/3)",
+        "(*4)",
+        "(/4)",
+        "(>0)",
+        "(<0)",
+        "(%2==0)",
+        "(%2==1)",
+        "(+)",
+        "(-)",
+        "(*)",
+        "(min)",
+        "(max)"
+      ]
+    },
+    "length_head": {
+      "outputs": 6,
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "training_loss": "BCE(operator) + 0.75*BCE(lambda) + 0.20*cross_entropy(length)",
+    "optimizer": "AdamW(weight_decay=1e-4)",
+    "gradient_clip_norm": 1
+  },
+  "training": {
+    "seed": 20261116,
+    "epochs_run": 9,
+    "selected_epoch": 5,
+    "early_stopping": {
+      "monitor": "development combined validation loss",
+      "patience": 4,
+      "min_delta": 0.0001
+    },
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "train_tasks": 79535,
+    "development_tasks": 10546,
+    "sealed_confirmation_tasks": 9919,
+    "structural_family_split_disjoint": true,
+    "confirmation_rows_used_for_optimizer": 0,
+    "confirmation_rows_used_for_model_selection": 0,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 2.1076524104336065,
+        "validation_loss": 2.0335824489593506,
+        "validation_operator": {
+          "macro_f1": 0.4287337592605407,
+          "micro_f1": 0.4443234531872727,
+          "bit_accuracy": 0.6774132372463493,
+          "exact_set_accuracy": 0.0027498577659776217
+        },
+        "validation_lambda": {
+          "macro_f1": 0.16761498360340352,
+          "micro_f1": 0.20046063294378572,
+          "bit_accuracy": 0.7661123698683462,
+          "exact_set_accuracy": 0.1660345154560971
+        },
+        "validation_length_accuracy": 0.2654086947441101
+      },
+      {
+        "epoch": 2,
+        "train_loss": 1.99758173300139,
+        "validation_loss": 1.9932447671890259,
+        "validation_operator": {
+          "macro_f1": 0.4373447174778858,
+          "micro_f1": 0.44655546252764,
+          "bit_accuracy": 0.6740628358303307,
+          "exact_set_accuracy": 0.006258296984638726
+        },
+        "validation_lambda": {
+          "macro_f1": 0.17691658127210905,
+          "micro_f1": 0.2104286509556504,
+          "bit_accuracy": 0.7664118099154581,
+          "exact_set_accuracy": 0.1250711170111891
+        },
+        "validation_length_accuracy": 0.26872748136520386
+      },
+      {
+        "epoch": 3,
+        "train_loss": 1.9605211153674356,
+        "validation_loss": 1.9511256217956543,
+        "validation_operator": {
+          "macro_f1": 0.4441131275078246,
+          "micro_f1": 0.4581718171384022,
+          "bit_accuracy": 0.683671534230988,
+          "exact_set_accuracy": 0.01469751564574246
+        },
+        "validation_lambda": {
+          "macro_f1": 0.18265894012440878,
+          "micro_f1": 0.21525188516778412,
+          "bit_accuracy": 0.7657630231467156,
+          "exact_set_accuracy": 0.12734686136923953
+        },
+        "validation_length_accuracy": 0.2991655468940735
+      },
+      {
+        "epoch": 4,
+        "train_loss": 1.9368904231062272,
+        "validation_loss": 1.9725226163864136,
+        "validation_operator": {
+          "macro_f1": 0.4411427860454627,
+          "micro_f1": 0.4510765474712184,
+          "bit_accuracy": 0.6702572855427018,
+          "exact_set_accuracy": 0.008249573297932866
+        },
+        "validation_lambda": {
+          "macro_f1": 0.18757950332880416,
+          "micro_f1": 0.22043989046903983,
+          "bit_accuracy": 0.7797768173515526,
+          "exact_set_accuracy": 0.14631139768632656
+        },
+        "validation_length_accuracy": 0.24890953302383423
+      },
+      {
+        "epoch": 5,
+        "train_loss": 1.9207451772843143,
+        "validation_loss": 1.9481511116027832,
+        "validation_operator": {
+          "macro_f1": 0.44871843670130523,
+          "micro_f1": 0.4653736515566486,
+          "bit_accuracy": 0.697673683545104,
+          "exact_set_accuracy": 0.016025033187938555
+        },
+        "validation_lambda": {
+          "macro_f1": 0.19519807924146299,
+          "micro_f1": 0.2287235982927808,
+          "bit_accuracy": 0.7889646361304361,
+          "exact_set_accuracy": 0.11795941589228143
+        },
+        "validation_length_accuracy": 0.2805803120136261
+      },
+      {
+        "epoch": 6,
+        "train_loss": 1.9067153413196085,
+        "validation_loss": 1.9530590772628784,
+        "validation_operator": {
+          "macro_f1": 0.4467341311684971,
+          "micro_f1": 0.4599053559905356,
+          "bit_accuracy": 0.6825463050761742,
+          "exact_set_accuracy": 0.01412857955622985
+        },
+        "validation_lambda": {
+          "macro_f1": 0.19864555776516238,
+          "micro_f1": 0.23151798225128445,
+          "bit_accuracy": 0.7947188757024365,
+          "exact_set_accuracy": 0.11691636639484164
+        },
+        "validation_length_accuracy": 0.24170301854610443
+      },
+      {
+        "epoch": 7,
+        "train_loss": 1.8951013253049451,
+        "validation_loss": 1.9628989696502686,
+        "validation_operator": {
+          "macro_f1": 0.44758714424746887,
+          "micro_f1": 0.4620382999013118,
+          "bit_accuracy": 0.693311840192174,
+          "exact_set_accuracy": 0.013844111511473545
+        },
+        "validation_lambda": {
+          "macro_f1": 0.2008831657681603,
+          "micro_f1": 0.23420247181434273,
+          "bit_accuracy": 0.8027089342928724,
+          "exact_set_accuracy": 0.11644225298691448
+        },
+        "validation_length_accuracy": 0.2366774082183838
+      },
+      {
+        "epoch": 8,
+        "train_loss": 1.8852380533310378,
+        "validation_loss": 1.9596052169799805,
+        "validation_operator": {
+          "macro_f1": 0.4451704360701649,
+          "micro_f1": 0.4585464597435953,
+          "bit_accuracy": 0.6854921297174285,
+          "exact_set_accuracy": 0.012516593969277451
+        },
+        "validation_lambda": {
+          "macro_f1": 0.20104342496230151,
+          "micro_f1": 0.22968382075386912,
+          "bit_accuracy": 0.7861249463503249,
+          "exact_set_accuracy": 0.11653707566849991
+        },
+        "validation_length_accuracy": 0.2544092535972595
+      },
+      {
+        "epoch": 9,
+        "train_loss": 1.8749092502992637,
+        "validation_loss": 1.9744476079940796,
+        "validation_operator": {
+          "macro_f1": 0.445347513773253,
+          "micro_f1": 0.46093999669403274,
+          "bit_accuracy": 0.6907705923256843,
+          "exact_set_accuracy": 0.017826664138061825
+        },
+        "validation_lambda": {
+          "macro_f1": 0.19977589592615036,
+          "micro_f1": 0.23275565247331573,
+          "bit_accuracy": 0.7998243285056944,
+          "exact_set_accuracy": 0.1396738099753461
+        },
+        "validation_length_accuracy": 0.24018585681915283
+      }
+    ],
+    "elapsed_seconds": 38.961
+  },
+  "held_out_operator_lambda_prediction": {
+    "split": "original v3 synthetic confirmation family split, evaluated after checkpoint freeze",
+    "tasks": 9919,
+    "confirmation_rows_used_for_training": 0,
+    "confirmation_rows_used_for_validation": 0,
+    "metrics": {
+      "operator": {
+        "macro_f1": 0.45683782992249394,
+        "micro_f1": 0.47416863234818,
+        "bit_accuracy": 0.6943509090298081,
+        "exact_set_accuracy": 0.010384111301542494
+      },
+      "lambda": {
+        "macro_f1": 0.2030316142005787,
+        "micro_f1": 0.2335197362429188,
+        "bit_accuracy": 0.7767230355352036,
+        "exact_set_accuracy": 0.09839701582820849
+      },
+      "program_length_accuracy": 0.285613477230072
+    }
+  },
+  "checkpoint": {
+    "path": "checkpoints/esq_v3_converged.pt",
+    "sha256": "a0f03d5066d86022d932699c1a6dfe68957d56131a38e7816e2085bda2000d41",
+    "bytes": 564464,
+    "sha256_sidecar": "esq_v3_converged.pt.sha256",
+    "hub_repo_id": "Kshitijpalsinghtomar/synth-compass",
+    "hub_path": "esq_v3_converged.pt",
+    "hub_model_card_path": "model_card.json",
+    "hub_sha256_sidecar_path": "esq_v3_converged.pt.sha256",
+    "source_path": "checkpoints/esq_v3_converged.pt",
+    "sha256_scope": "Integrity check for the exact published bytes; not a malware scan."
+  },
+  "limitations": [
+    "The guide predicts operation/lambda priors; it is not a program-output oracle.",
+    "Search remains symbolic and branch-preserving; model scores reorder enumeration but do not prune valid branches.",
+    "The legacy tree candidate-scoring branch is not used by v3 prior prediction and is not optimized by this training objective."
+  ],
+  "provenance_status": "Partial for the historical release rebuild: corpus and supervision hashes are known, but the exact training-entrypoint hash and runtime environment were not retained in the original model card. Re-run the committed training pipeline from a clean checkout before claiming exact training reproduction.",
+  "data_provenance": {
+    "synthetic_manifest_sha256": "c830677bb817ba1e33f0fc840ae3b0af63968ae53a8f43022de0dbc9e8d71cf2",
+    "synthetic_corpus_sha256": "2faa003d65827bebdcc4cb7f7c2fac9958b905e5db8143c708466d58bd26c958",
+    "supervision_npz_sha256": "964a44a1be2a574ad844f297679e2351f9734aeb902745f02d864a598be5ada5",
+    "generator_version": "esq-synth-v3-exedec-inputs-1",
+    "upstream_repository": "google-deepmind/exedec",
+    "upstream_commit": "ef046ce2cc3fcd024e32f5dfe00e69700dac82ed",
+    "synthetic_data_only": true
+  },
+  "license": {
+    "identifier": "Apache-2.0",
+    "copyright": "2026 Kshitij Pal, TENS LAB",
+    "scope": "First-party Synth source code and packaged ESQSetEncoder model weights; see the repository root LICENSE",
+    "covers": [
+      "first-party source code",
+      "packaged checkpoint weights"
+    ],
+    "excludes": [
+      "third-party dependencies and upstream materials under their own licences",
+      "raw synthetic corpora",
+      "supervision arrays",
+      "generated reference programs",
+      "hidden benchmark target maps",
+      "private oracle traces"
+    ]
+  },
+  "author": "Kshitij Pal",
+  "affiliation": "TENS LAB",
+  "url": "https://tenslab.dev",
+  "release_version": "1.0.0",
+  "serialization_security": {
+    "format": "PyTorch checkpoint containing a state_dict",
+    "inference_loader": "Synth NeuralGuide uses torch.load(..., weights_only=True) after SHA-256 verification against the model card and sidecar.",
+    "patched_pytorch_for_custom_checkpoints": ">=2.10.0",
+    "older_pytorch_policy": "On PyTorch versions earlier than 2.10.0, Synth accepts only the exact bundled checkpoint SHA-256 embedded in the loader.",
+    "advisory": "CVE-2026-24747 affects the weights_only unpickler in PyTorch versions before 2.10.0. Do not load arbitrary or untrusted checkpoints, disable weights_only, or treat a checksum as a malware scan."
+  }
+}

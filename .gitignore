@@ -1,0 +1,20 @@
+# Local credentials and private environment configuration
+.env
+.env.*
+!.env.example
+*.pem
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+build/
+dist/
+*.egg-info/
+artifacts/
+benchmarks/results/*/target_maps/
+benchmarks/results/*/oracle_provenance.jsonl
+
+# Private/generated research data and one-shot benchmark outputs
+/data/
+/benchmarks/results/
