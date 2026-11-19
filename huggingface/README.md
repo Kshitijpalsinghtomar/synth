@@ -13,7 +13,7 @@ tags:
 
 **A 137,897-parameter CPU neural search compass for deterministic program synthesis.**
 
-Synth combines execution-signature quotienting with branch-preserving symbolic search. The ESQSetEncoder checkpoint predicts operator, lambda, and program-length priors to reorder search visitation. It does **not** predict program outputs and does **not** prune valid symbolic branches.
+Synth combines execution-signature quotienting with branch-preserving symbolic search. The ESQSetEncoder predicts operator and lambda priors that reorder search visitation. It also has a program-length head trained with an auxiliary loss and exposed at inference, but the released search runtime does not use its output to schedule search. The model does **not** predict program outputs and does **not** prune valid symbolic branches.
 
 - **Author:** Kshitij Pal
 - **Organization:** TENS LAB — https://tenslab.dev
@@ -69,15 +69,15 @@ Use the Synth `NeuralGuide` loader rather than calling `torch.load` on arbitrary
 
 ## Architecture
 
-ESQSetEncoder consumes a fixed-shape task representation with input feature shape `[3, 4, 37]`, an 8-dimensional variable-position embedding, value/example encoders, and a task projection. Three trained heads predict:
+ESQSetEncoder consumes a fixed-shape task representation with input feature shape `[3, 4, 37]`, an 8-dimensional variable-position embedding, value/example encoders, and a task projection. Three trained heads are present:
 
 - **Operator priors:** 15 DeepCoder operators.
 - **Lambda priors:** 19 supported lambda expressions.
-- **Program-length prior:** lengths 1–6.
+- **Program-length head:** classes 1–6. This head contributes a weighted auxiliary cross-entropy loss during training and shares the task encoder with the operator/lambda heads. Its predictions are returned by the model API but discarded by the released search runtime; they do not affect enumeration order.
 
-The training objective was binary cross-entropy for operator and lambda heads plus weighted cross-entropy for length. Inference uses PyTorch and runs on CPU.
+The training objective was binary cross-entropy for operator and lambda heads plus weighted cross-entropy for length. Inference uses PyTorch and runs on CPU. The benchmarked search guidance uses only operator and lambda scores. Whether auxiliary length supervision improves those scores has not been isolated by a controlled ablation.
 
-The learned scores affect only enumeration order. Search remains symbolic, bounded, and branch-preserving. The model is not a program-output oracle.
+The learned operator/lambda scores affect enumeration order only. Search remains symbolic, bounded, and branch-preserving. The model is not a program-output oracle.
 
 ## Locked V6 benchmark: strict depth-4 zero-overlap cohort
 
