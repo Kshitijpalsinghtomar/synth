@@ -2,7 +2,7 @@
   <img src="https://tenslab.dev/assets/tens-emblem.svg" alt="TENS LAB emblem" width="80" />
 </p>
 
-<h1 align="center">Synth <sub>(ESQ-DSL)</sub></h1>
+<h1 align="center">Synth(ESQ-DSL)</h1>
 
 <p align="center">
   <strong>Deterministic, bounded program synthesis for the typed integer/list fragment of DeepCoder.</strong>
